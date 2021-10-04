@@ -146,9 +146,9 @@ func (m *Monitor) checkServerStatus(server *Server) {
 	// NewWorker() blocks if there aren't free slots in dialer for concurrency
 	worker, output := m.dialer.NewWorker()
 	go func() {
-		logger.Logln("Checking", server)
+		// logger.Logln("Checking", server)
 
-		formattedAddress := fmt.Sprintf("%s:%d", server.IPAddress, server.Port)
+		formattedAddress := server.FormattedAddress()
 		timeoutSeconds := time.Duration(server.Timeout) * time.Second
 		worker <- dial.NetAddressTimeout{NetAddress: dial.NetAddress{Network: server.Protocol, Address: formattedAddress}, Timeout: timeoutSeconds}
 		dialerStatus := <-output
@@ -166,7 +166,8 @@ func (m *Monitor) checkServerStatus(server *Server) {
 		}
 
 		// Handle success
-		logger.Logln("OK", server)
+		// logger.Logln("OK", server)
+
 		// Reset time tracker for server
 		if m.notificationTracker[server].HasBeenRan() {
 			m.notificationTracker[server] = NewTrackerWithExpBackoff(m.config.Settings.Monitor.ExponentialBackoffSeconds)

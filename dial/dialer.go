@@ -2,6 +2,9 @@ package dial
 
 import (
 	"net"
+	"net/http"
+
+	"github.com/ssimunic/gossm/logger"
 )
 
 // Dialer is used to test connections
@@ -29,18 +32,41 @@ func (d *Dialer) NewWorker() (chan<- NetAddressTimeout, <-chan Status) {
 	dialerStatusCh := make(chan Status)
 
 	d.semaphore <- struct{}{}
-	go func() {
-		netAddressTimeout := <-netAddressTimeoutCh
-		conn, err := net.DialTimeout(netAddressTimeout.Network, netAddressTimeout.Address, netAddressTimeout.Timeout)
 
-		dialerStatus := Status{}
+	go func() {
+
+		var err error
+		var dialerStatus Status
+		netAddressTimeout := <-netAddressTimeoutCh
+
+		if netAddressTimeout.NetAddress.Network == "http" {
+			err = func() error {
+				client := http.Client{
+					Timeout: netAddressTimeout.Timeout,
+				}
+				resp, err := client.Get(netAddressTimeout.Address)
+				if err != nil {
+					return err
+				}
+				logger.Logln(" -> ", resp.Status, resp.Request.URL, resp.Proto)
+				return resp.Body.Close()
+			}()
+		} else {
+			err = func() error {
+				conn, err := net.DialTimeout(netAddressTimeout.Network, netAddressTimeout.Address, netAddressTimeout.Timeout)
+				if err != nil {
+					return err
+				}
+				conn.Close()
+				return nil
+			}()
+		}
 
 		if err != nil {
 			dialerStatus.Ok = false
 			dialerStatus.Err = err
 		} else {
 			dialerStatus.Ok = true
-			conn.Close()
 		}
 		dialerStatusCh <- dialerStatus
 		<-d.semaphore

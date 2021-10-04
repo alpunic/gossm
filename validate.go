@@ -85,6 +85,11 @@ func (s *Server) Validate() error {
 	errServerProperty := func(property string) error {
 		return fmt.Errorf("missing server property %s", property)
 	}
+
+	if s.Protocol == "http" {
+		return nil
+	}
+
 	switch {
 	case s.Name == "":
 		return errServerProperty("name")

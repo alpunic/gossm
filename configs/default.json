@@ -1,47 +1,12 @@
 {
     "settings": {
         "notifications": {
-            "email": [
-                {
-                    "smtp": "smtp.gmail.com",
-                    "port": 587,
-                    "username": "silvio.simunic@gmail.com",
-                    "password": "...",
-                    "from": "silvio.simunic@gmail.com",
-                    "to": [
-                        "silvio.simunic@gmail.com"
-                    ]
-                }
-            ],
-            "telegram": [
-                {
-                    "botToken": "123456:ABC-DEF1234...",
-                    "chatId": "12341234"
-                }
-            ],
-            "pushover": [
-                {
-                    "userKey": "user_key",
-                    "appToken": "app_token"
-                }
-            ],
-            "slack": [
-                {
-                    "bearerToken": "bearerToken",
-                    "channelId": "channelId"
-                }
-            ],
-            "webhook": [
-                {
-                    "url": "url",
-                    "method": "GET"
-                }
-            ],
-            "sms": [
-                {
-                    "sms": "todo"
-                }
-            ]
+            "email": [],
+            "telegram": [],
+            "pushover": [],
+            "slack": [],
+            "webhook": [],
+            "sms": []
         },
         "monitor": {
             "checkInterval": 15,
@@ -52,27 +17,73 @@
     },
     "servers": [
         {
-            "name":"Local Webserver 1",
-            "ipAddress":"192.168.20.168",
-            "port": 80,
-            "protocol": "tcp",
-            "checkInterval": 5,
+            "name": "xi-auth-api-dev",
+            "url": "https://xi-auth-api-dev.azurewebsites.net",
+            "protocol": "http",
+            "checkInterval": 15,
             "timeout": 5
         },
         {
-            "name":"Test server 1",
-            "ipAddress":"162.243.10.151",
-            "port": 80,
-            "protocol": "tcp",
-            "checkInterval": 5,
+            "name": "xi-core-api-dev",
+            "url": "https://xi-core-api-dev.azurewebsites.net",
+            "protocol": "http",
+            "checkInterval": 15,
             "timeout": 5
         },
         {
-            "name":"Test server 2",
-            "ipAddress":"162.243.10.151",
-            "port": 8080,
-            "protocol": "tcp",
-            "checkInterval": 5,
+            "name": "xi-user-api-dev",
+            "url": "https://xi-user-api-dev.azurewebsites.net",
+            "protocol": "http",
+            "checkInterval": 15,
+            "timeout": 5
+        },
+        {
+            "name": "xi-conf-service-dev",
+            "url": "https://xi-conf-service-dev.azurewebsites.net",
+            "protocol": "http",
+            "checkInterval": 15,
+            "timeout": 5
+        },
+        {
+            "name": "xi-lot-service-dev",
+            "url": "https://xi-lot-service-dev.azurewebsites.net",
+            "protocol": "http",
+            "checkInterval": 15,
+            "timeout": 5
+        },
+        {
+            "name": "xi-notify-service-dev",
+            "url": "https://xi-notify-service-dev.azurewebsites.net",
+            "protocol": "http",
+            "checkInterval": 15,
+            "timeout": 5
+        },
+        {
+            "name": "xi-payment-hub-dev",
+            "url": "https://xi-payment-hub-dev.azurewebsites.net",
+            "protocol": "http",
+            "checkInterval": 15,
+            "timeout": 5
+        },
+        {
+            "name": "xi-payout-request-dev",
+            "url": "https://xi-payout-request-dev.azurewebsites.net",
+            "protocol": "http",
+            "checkInterval": 15,
+            "timeout": 5
+        },
+        {
+            "name": "xi-storage-api-dev",
+            "url": "https://xi-storage-api-dev.azurewebsites.net",
+            "protocol": "http",
+            "checkInterval": 15,
+            "timeout": 5
+        },
+        {
+            "name": "xi-user-verify-dev",
+            "url": "https://xi-user-verify-dev.azurewebsites.net",
+            "protocol": "http",
+            "checkInterval": 15,
             "timeout": 5
         }
     ]

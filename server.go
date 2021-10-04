@@ -8,6 +8,7 @@ type Servers []*Server
 
 type Server struct {
 	Name          string `json:"name"`
+	URL           string `json:"url"`
 	IPAddress     string `json:"ipAddress"`
 	Port          int    `json:"port"`
 	Protocol      string `json:"protocol"`
@@ -21,4 +22,11 @@ func (s *Server) String() string {
 
 func (s *Server) MarshalText() (text []byte, err error) {
 	return []byte(s.String()), nil
+}
+
+func (s *Server) FormattedAddress() string {
+	if s.Protocol == "http" {
+		return s.URL
+	}
+	return fmt.Sprintf("%s:%d", s.IPAddress, s.Port)
 }
